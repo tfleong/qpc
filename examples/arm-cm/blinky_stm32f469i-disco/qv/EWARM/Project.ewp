@@ -318,14 +318,14 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\Inc</state>
           <state>$PROJ_DIR$\..\..</state>
-          <state>F:\qpc\3rd_party\BSP\Components</state>
-          <state>F:\qpc\3rd_party\BSP\STM32469I-Discovery</state>
-          <state>F:\qpc\3rd_party\CMSIS\Device\ST\STM32F4xx\Include</state>
-          <state>F:\qpc\3rd_party\Middlewares\ST\STM32_Audio\Addons\PDM</state>
-          <state>F:\qpc\3rd_party\STM32F4xx_HAL_Driver\Inc</state>
-          <state>F:\qpc\3rd_party\Utilities</state>
-          <state>F:\qpc\include</state>
-          <state>F:\qpc\ports\arm-cm\qv\iar</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\3rd_party\BSP\Components</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\3rd_party\BSP\STM32469I-Discovery</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\3rd_party\CMSIS\Device\ST\STM32F4xx\Include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\3rd_party\Middlewares\ST\STM32_Audio\Addons\PDM</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\3rd_party\STM32F4xx_HAL_Driver\Inc</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\3rd_party\Utilities</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\include</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\ports\arm-cm\qv\iar</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
