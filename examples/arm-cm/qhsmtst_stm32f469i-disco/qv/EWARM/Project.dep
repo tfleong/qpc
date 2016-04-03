@@ -2,7 +2,7 @@
 
 <project>
   <fileVersion>2</fileVersion>
-  <fileChecksum>1941830435</fileChecksum>
+  <fileChecksum>2475662440</fileChecksum>
   <configuration>
     <name>STM32469I_DISCO</name>
     <outputs/>
