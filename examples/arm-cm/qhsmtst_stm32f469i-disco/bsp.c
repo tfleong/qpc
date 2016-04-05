@@ -61,8 +61,6 @@ void BSP_Init(void)
      */
   BSP_LED_Init(LED1);
   BSP_LED_Init(LED2);
-  BSP_LED_Init(LED3);
-  BSP_LED_Init(LED4);
   LCD_Init();
   TS_Init();
   ft6x06_TS_EnableIT(TS_I2C_ADDRESS);

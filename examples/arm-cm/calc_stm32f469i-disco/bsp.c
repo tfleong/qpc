@@ -1,11 +1,5 @@
 #include "bsp.h"
 
-//Q_DEFINE_THIS_FILE
-
-#ifdef Q_SPY
-    #error Simple Blinky Application does not provide Spy build configuration
-#endif
-
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! CAUTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 * Assign a priority to EVERY ISR explicitly by calling NVIC_SetPriority().
 * DO NOT LEAVE THE ISR PRIORITIES AT THE DEFAULT VALUE!
@@ -19,7 +13,7 @@ Q_ASSERT_COMPILE(MAX_KERNEL_UNAWARE_CMSIS_PRI <= QF_AWARE_ISR_CMSIS_PRI);
 
 enum KernelAwareISRs {
     SYSTICK_PRIO = QF_AWARE_ISR_CMSIS_PRI, /* see NOTE00 */
-    TIM7_PRIO,
+    TS_PRIO,
     /* ... */
     MAX_KERNEL_AWARE_CMSIS_PRI /* keep always last */
 };
@@ -28,16 +22,20 @@ Q_ASSERT_COMPILE(MAX_KERNEL_AWARE_CMSIS_PRI <= (0xFF >>(8-__NVIC_PRIO_BITS)));
 
 /* ISRs defined in this BSP ------------------------------------------------*/
 /* Local-scope objects -----------------------------------------------------*/
-TIM_HandleTypeDef htim7;
+TouchscreenEvt *te;
 
 static void SystemClock_Config(void);
 static void Error_Handler(void);
-static void TIM_Init(void);
+static void LCD_Init(void);
+static void TS_Init(void);
 
 /* ISRs used in this project ===============================================*/
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-  if(htim == &htim7){
-    QF_TICK_X(0U, (void *)0); /* process time events for rate 0 */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  if(GPIO_Pin == TS_INT_PIN)
+  {
+    te = Q_NEW(TouchscreenEvt, TOUCH_SIG);
+    QACTIVE_POST(AO_Touchscreen, &te->super, me);
   }
 }
 
@@ -62,8 +60,11 @@ void BSP_Init(void)
      */
   BSP_LED_Init(LED1);
   BSP_LED_Init(LED2);
-  TIM_Init();
-  HAL_TIM_Base_Start_IT(&htim7);
+  LCD_Init();
+  TS_Init();
+  ft6x06_TS_EnableIT(TS_I2C_ADDRESS);
+  
+  Draw_Menu();
 }
 
 /**
@@ -148,28 +149,35 @@ static void Error_Handler(void)
   /* User may add here some code to deal with this error */
   while(1)
   {
-    BSP_LED_On(LED2);
+    BSP_LED_Toggle(LED2);
   }
 }
 
-static void TIM_Init(void)
+static void LCD_Init(void)
 {
-  /* 2Hz timer */
-  __HAL_RCC_TIM7_CLK_ENABLE();
-  htim7.Instance = TIM7;
-  htim7.Init.Prescaler = 5999;
-  htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim7.Init.Period = 7499;
-  htim7.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  HAL_TIM_Base_Init(&htim7);
+  BSP_LCD_InitEx(LCD_ORIENTATION_PORTRAIT);
+  BSP_LCD_LayerDefaultInit(0, LCD_FB_START_ADDRESS);
+  BSP_LCD_SelectLayer(0);
+}
+
+static void TS_Init(void)
+{
+  BSP_TS_Init((uint16_t)LCD_PIXEL_Y, (uint16_t)LCD_PIXEL_X);
+  
+  GPIO_InitTypeDef gpio_init_structure;
+
+  TS_INT_GPIO_CLK_ENABLE(); //TS_INT_GPIO_CLK_ENABLE() = __HAL_RCC_GPIOJ_CLK_ENABLE()
+
+  gpio_init_structure.Pin = TS_INT_PIN; //TS_INT_PIN = GPIO_PIN_5
+  gpio_init_structure.Mode = GPIO_MODE_IT_FALLING;
+  gpio_init_structure.Pull = GPIO_PULLUP;
+  gpio_init_structure.Speed = GPIO_SPEED_FAST;
+  HAL_GPIO_Init(TS_INT_GPIO_PORT, &gpio_init_structure); //TS_INT_GPIO_PORT = GPIOJ
 }
 
 /* QF callbacks ============================================================*/
 void QF_onStartup(void) {
-    /* set up the SysTick timer to fire at BSP_TICKS_PER_SEC rate */
-    //SysTick_Config(SystemCoreClock / BSP_TICKS_PER_SEC);
-
-    /* assing all priority bits for preemption-prio. and none to sub-prio. */
+    /* assign all priority bits for preemption-prio. and none to sub-prio. */
     HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
     /* set priorities of ALL ISRs used in the system, see NOTE00
@@ -179,11 +187,11 @@ void QF_onStartup(void) {
     * DO NOT LEAVE THE ISR PRIORITIES AT THE DEFAULT VALUE!
     */
     HAL_NVIC_SetPriority(SysTick_IRQn, SYSTICK_PRIO, 0);
-    HAL_NVIC_SetPriority(TIM7_IRQn, TIM7_PRIO, 0);
+    HAL_NVIC_SetPriority((IRQn_Type)TS_INT_EXTI_IRQn, TS_PRIO, 0);
     /* ... */
 
     /* enable IRQs... */
-    HAL_NVIC_EnableIRQ(TIM7_IRQn);
+    HAL_NVIC_EnableIRQ((IRQn_Type)TS_INT_EXTI_IRQn);
 }
 /*..........................................................................*/
 void QF_onCleanup(void) {
@@ -191,7 +199,7 @@ void QF_onCleanup(void) {
 /*..........................................................................*/
 void QV_onIdle(void) { /* CATION: called with interrupts DISABLED, NOTE01 */
     /* toggle LED3 on and then off, see NOTE02 */
-    BSP_LED_Toggle(LED1); /* turn LED3 on and off */
+    BSP_LED_Toggle(LED1); /* turn LED1 on and off */
 
 #ifdef NDEBUG
     /* Put the CPU and peripherals to the low-power mode.
