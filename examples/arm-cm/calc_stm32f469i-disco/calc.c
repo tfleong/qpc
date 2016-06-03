@@ -23,7 +23,7 @@ typedef struct {
     QActive super;
 
 /* private: */
-    double operand1;
+    float operand1;
     uint8_t operator;
 } Calc;
 
@@ -162,7 +162,6 @@ static QState Calc_negated1(Calc * const me, QEvt const * const e) {
         }
         /* ${AOs::Calc::SM::on::negated1::POINT} */
         case POINT_SIG: {
-            //BSP_insert(Q_EVT_CAST(CalcEvt)->key_code);
             BSP_insert((int)'0');
             BSP_insert((int)'.');
             status_ = Q_TRAN(&Calc_frac1);
@@ -560,7 +559,6 @@ static QState Calc_negated2(Calc * const me, QEvt const * const e) {
         }
         /* ${AOs::Calc::SM::on::negated2::POINT} */
         case POINT_SIG: {
-            //BSP_insert(Q_EVT_CAST(CalcEvt)->key_code);
             BSP_insert((int)'0');
             BSP_insert((int)'.');
             status_ = Q_TRAN(&Calc_frac2);

@@ -44,7 +44,6 @@
 #include "stm32469i_discovery.h"
 #include "stm32469i_discovery_lcd.h"
 #include "stm32469i_discovery_ts.h"
-//#include "lcd_log.h"
 #include "menu_calc.h"
 
 #include "qpc.h"

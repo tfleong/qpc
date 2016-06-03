@@ -11,7 +11,7 @@
  <package name="AOs" stereotype="0x02">
   <class name="Calc" superclass="qpc::QActive">
    <documentation>Calculator state machine</documentation>
-   <attribute name="operand1" type="double" visibility="0x02" properties="0x00"/>
+   <attribute name="operand1" type="float" visibility="0x02" properties="0x00"/>
    <attribute name="operator" type="uint8_t" visibility="0x02" properties="0x00"/>
    <statechart>
     <initial target="../1">
