@@ -56,7 +56,7 @@ static QState Blinky_off(Blinky * const me, QEvt const * const e) {
     switch (e->sig) {
         /* ${AOs::Blinky::SM::off} */
         case Q_ENTRY_SIG: {
-            BSP_LED_Off(LED3);
+            BSP_LED_Off(LED2);
             status_ = Q_HANDLED();
             break;
         }
@@ -78,7 +78,7 @@ static QState Blinky_on(Blinky * const me, QEvt const * const e) {
     switch (e->sig) {
         /* ${AOs::Blinky::SM::on} */
         case Q_ENTRY_SIG: {
-            BSP_LED_On(LED3);
+            BSP_LED_On(LED2);
             status_ = Q_HANDLED();
             break;
         }

@@ -166,9 +166,6 @@ static void TIM_Init(void)
 
 /* QF callbacks ============================================================*/
 void QF_onStartup(void) {
-    /* set up the SysTick timer to fire at BSP_TICKS_PER_SEC rate */
-    //SysTick_Config(SystemCoreClock / BSP_TICKS_PER_SEC);
-
     /* assign all priority bits for preemption-prio. and none to sub-prio. */
     HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
 
