@@ -79,14 +79,14 @@ int main(void)
   QACTIVE_START(AO_Calc,            /* AO pointer to start */
                 1U,                     /* unique QP priority of the AO (lowest) */
                 l_calcQSto,         /* storage for the AO's queue */
-                Q_DIM(l_calcQSto),  /* lenght of the queue [entries] */
+                Q_DIM(l_calcQSto),  /* length of the queue [entries] */
                 (void *)0,              /* stack storage (not used in QK) */
                 0U,                     /* stack size [bytes] (not used in QK) */
                 (QEvt *)0);             /* initial event (or 0) */
   QACTIVE_START(AO_Touchscreen,            /* AO pointer to start */
                 2U,                     /* unique QP priority of the AO */
                 l_touchscreenQSto,         /* storage for the AO's queue */
-                Q_DIM(l_touchscreenQSto),  /* lenght of the queue [entries] */
+                Q_DIM(l_touchscreenQSto),  /* length of the queue [entries] */
                 (void *)0,              /* stack storage (not used in QK) */
                 0U,                     /* stack size [bytes] (not used in QK) */
                 (QEvt *)0);             /* initial event (or 0) */

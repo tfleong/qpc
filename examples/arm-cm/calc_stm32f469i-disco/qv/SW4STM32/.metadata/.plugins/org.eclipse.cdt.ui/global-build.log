@@ -1906,3 +1906,6 @@ make: Nothing to be done for `all'.
 make clean 
 rm -rf *
 ' '
+19:23:30 **** Clean-only build of configuration Debug for project STM32469I_DISCO ****
+make clean 
+make: *** No rule to make target `clean'.  Stop.
