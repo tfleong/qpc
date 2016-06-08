@@ -62,6 +62,7 @@ void BSP_Init(void)
      */
   BSP_LED_Init(LED1);
   BSP_LED_Init(LED2);
+  BSP_LED_Init(LED3);
   TIM_Init();
   HAL_TIM_Base_Start_IT(&htim7);
 }

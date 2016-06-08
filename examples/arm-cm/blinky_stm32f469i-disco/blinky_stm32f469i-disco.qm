@@ -15,7 +15,7 @@ QTimeEvt_armX(&amp;me-&gt;timeEvt, BSP_TICKS_PER_SEC, BSP_TICKS_PER_SEC);</actio
      </initial_glyph>
     </initial>
     <state name="off">
-     <entry>BSP_LED_Off(LED2);</entry>
+     <entry>BSP_LED_Off(LED3);</entry>
      <tran trig="TIMEOUT" target="../../2">
       <tran_glyph conn="4,24,3,1,24,6,-2">
        <action box="0,-2,10,2"/>
@@ -26,7 +26,7 @@ QTimeEvt_armX(&amp;me-&gt;timeEvt, BSP_TICKS_PER_SEC, BSP_TICKS_PER_SEC);</actio
      </state_glyph>
     </state>
     <state name="on">
-     <entry>BSP_LED_On(LED2);</entry>
+     <entry>BSP_LED_On(LED3);</entry>
      <tran trig="TIMEOUT" target="../../1">
       <tran_glyph conn="4,39,3,1,26,-21,-4">
        <action box="0,-2,10,2"/>

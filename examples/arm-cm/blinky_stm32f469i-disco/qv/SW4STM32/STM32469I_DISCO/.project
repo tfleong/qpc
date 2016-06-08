@@ -435,5 +435,15 @@
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/3rd_party/BSP/STM32469I-Discovery/stm32469i_discovery_ts.c</locationURI>
 		</link>
+		<link>
+			<name>Example/User/blinky.c</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/blinky.c</locationURI>
+		</link>
+		<link>
+			<name>Example/User/bsp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/bsp.c</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>
