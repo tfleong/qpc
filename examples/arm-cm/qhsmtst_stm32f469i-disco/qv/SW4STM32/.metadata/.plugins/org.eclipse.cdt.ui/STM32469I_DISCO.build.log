@@ -1,0 +1,6 @@
+16:50:56 **** Incremental Build of configuration Debug for project STM32469I_DISCO ****
+make all 
+make: Nothing to be done for `all'.
+
+16:50:56 Build Finished (took 577ms)
+
