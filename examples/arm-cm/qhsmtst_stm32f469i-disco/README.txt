@@ -6,5 +6,5 @@ contains portable code that should compile with any C compiler
 for ARM Cortex-M.
 
 The sub-directories contain code and project files, which are
-specific to the particular ARM toolchains, such as GCC (SW4STM32),
+specific to the particular ARM toolchains, such as GNU (SW4STM32),
 and IAR (EWARM).
